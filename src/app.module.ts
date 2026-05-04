@@ -1,19 +1,24 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { NotificationsModule } from './notifications/notifications.module';
+import { OrdersModule } from './orders/orders.module';
 import { ReceiptsModule } from './receipts/receipts.module';
-import { Receipt } from './database/entities/receipts.entity';
-import { ConfigModule } from '@nestjs/config';
+
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    // Temporary SQLite fix in src/app.module.ts
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'db.sqlite',
-      entities: [Receipt],
+      database: 'tp02.sqlite',
+      autoLoadEntities: true,
       synchronize: true,
     }),
+    NotificationsModule,
+    OrdersModule,
     ReceiptsModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

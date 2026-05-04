@@ -13,7 +13,7 @@ export class ApiKeyGuard implements CanActivate {
     const apiKey = req.headers['x-api-key'];
 
     if (!apiKey || apiKey !== 'itc-123') {
-      throw new UnauthorizedException('Invalid API key');
+      throw new UnauthorizedException('Invalid API key'); //UnauthorizedException : response code error to users.throw method to caught error
     }
     return true;
   }
